@@ -17,7 +17,19 @@ const prepopulatedNotes = [
   createNoteObject('Random thought', 'Random Thought')
 ];
 
+export function setActiveNoteIndexToEdit(index) {
+  activeNoteIndexToEdit = index;
+}
+
+export function updateActiveNotes(updatedNotes) {
+  activeNotes = updatedNotes;
+}
+
 export const initialNotesState = {
   activeNotes: prepopulatedNotes,
   archivedNotes: []
 };
+
+export let activeNotes = initialNotesState.activeNotes;
+export let archivedNotes = initialNotesState.archivedNotes;
+export let activeNoteIndexToEdit = -1;
