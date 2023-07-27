@@ -8,7 +8,7 @@ export function createNoteObject(content, category) {
 }
 
 const prepopulatedNotes = [
-  createNoteObject('Buy groceries', 'Task'),
+  createNoteObject('I’m gonna have a dentist appointment on the 3/5/2021, I moved it from 5/5/2021', 'Task'),
   createNoteObject('Call a friend', 'Task'),
   createNoteObject('Interesting idea', 'Idea'),
   createNoteObject('Remember to pay bills', 'Task'),

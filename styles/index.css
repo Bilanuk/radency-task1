@@ -91,3 +91,9 @@ table th {
 ::-webkit-scrollbar-thumb:hover {
   background-color: #5599dd;
 }
+
+#editNoteContainer {
+  background-color: #6c6c6c;
+  padding: 20px;
+  border-radius: 8px;
+}
