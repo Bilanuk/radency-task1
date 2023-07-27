@@ -90,17 +90,22 @@ function renderApp() {
 }
 
 function handleAddNote() {
-  const content = noteInput.value.trim();
-  const category = categorySelect.value;
+  try {
+    const content = noteInput.value.trim();
+    const category = categorySelect.value;
 
-  if (content === '') return;
+    if (content === '') return;
 
-  const newNote = createNoteObject(content, category);
-  activeNotes.push(newNote);
+    const newNote = createNoteObject(content, category);
+    activeNotes.push(newNote);
 
-  renderApp();
-  noteInput.value = '';
+    renderApp();
+    noteInput.value = '';
+  } catch (error) {
+    console.error('Error while adding a new note:', error);
+  }
 }
+
 function openEditForm(index) {
   const noteToEdit = activeNotes[index];
   editNoteContent.value = noteToEdit.content;
@@ -131,51 +136,65 @@ function handleEditNote(event) {
 }
 
 function handleSaveEdit() {
-  if (activeNoteIndexToEdit !== -1) {
+  try {
+    if (activeNoteIndexToEdit === -1) {
+      return;
+    }
+
     const newContent = editNoteContent.value.trim();
     const newCategory = editCategorySelect.value;
 
-    if (newContent !== '') {
-      const updatedNote = {
-        ...activeNotes[activeNoteIndexToEdit],
-        content: newContent,
-        dates: newContent.match(dateRegex),
-        category: newCategory,
-      };
-
-      activeNotes = [
-        ...activeNotes.slice(0, activeNoteIndexToEdit),
-        updatedNote,
-        ...activeNotes.slice(activeNoteIndexToEdit + 1),
-      ];
-
-      closeEditForm();
-      renderApp();
-    } else {
+    if (newContent === '') {
       alert('Note content cannot be empty.');
+      return;
     }
+
+    const updatedNote = {
+      ...activeNotes[activeNoteIndexToEdit],
+      content: newContent,
+      dates: newContent.match(dateRegex),
+      category: newCategory,
+    };
+
+    activeNotes = [
+      ...activeNotes.slice(0, activeNoteIndexToEdit),
+      updatedNote,
+      ...activeNotes.slice(activeNoteIndexToEdit + 1),
+    ];
+
+    closeEditForm();
+    renderApp();
+  } catch (error) {
+    console.error('Error while saving the edited note:', error);
   }
 }
-
 
 function handleCancelEdit() {
   closeEditForm();
 }
 
 function handleArchiveNote(event) {
-  const index = event.target.dataset.index;
-  const archivedNote = activeNotes.splice(index, 1)[0];
-  archivedNote['archived'] = true;
-  archivedNotes.push(archivedNote);
-  renderApp();
+  try {
+    const index = event.target.dataset.index;
+    const archivedNote = activeNotes.splice(index, 1)[0];
+    archivedNote['archived'] = true;
+    archivedNotes.push(archivedNote);
+    renderApp();
+  } catch (error) {
+    console.error('Error while archiving the note:', error);
+  }
 }
 
 function handleUnarchiveNote(event) {
-  const index = event.target.dataset.index;
-  const unarchivedNote = archivedNotes.splice(index, 1)[0];
-  unarchivedNote['archived'] = false;
-  activeNotes.push(unarchivedNote);
-  renderApp();
+  try {
+    const index = event.target.dataset.index;
+    const unarchivedNote = archivedNotes.splice(index, 1)[0];
+    unarchivedNote['archived'] = false;
+    activeNotes.push(unarchivedNote);
+    renderApp();
+  } catch (error) {
+    console.error('Error while unarchiving the note:', error);
+  }
 }
 
 function handleDeleteNote(event) {
