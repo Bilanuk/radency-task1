@@ -1,4 +1,4 @@
-const dateRegex = /\d{1,2}\/\d{1,2}\/\d{4}/g;
+export const dateRegex = /\d{1,2}\/\d{1,2}\/\d{4}/g;
 
 export function createNoteObject(content, category) {
   const timestamp = new Date().toLocaleString();

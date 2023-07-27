@@ -1,4 +1,4 @@
-import { createNoteObject, initialNotesState } from './data.js';
+import { createNoteObject, initialNotesState, dateRegex } from './data.js';
 
 let activeNotes = initialNotesState.activeNotes;
 let archivedNotes = initialNotesState.archivedNotes;
@@ -7,6 +7,12 @@ const noteInput = document.querySelector('#noteInput');
 const categorySelect = document.querySelector('#categorySelect');
 const activeNotesList = document.querySelector('#activeNotesList');
 const archivedNotesList = document.querySelector('#archivedNotesList');
+const editNoteContainer = document.querySelector('#editNoteContainer');
+const editNoteContent = document.querySelector('#editNoteContent');
+const editCategorySelect = document.querySelector('#editCategorySelect');
+const saveEditButton = document.querySelector('#saveEditButton');
+const cancelEditButton = document.querySelector('#cancelEditButton');
+let activeNoteIndexToEdit = -1;
 
 function renderNotes(notes, targetElement) {
   targetElement.innerHTML = '';
@@ -92,15 +98,45 @@ function handleAddNote() {
   noteInput.value = '';
 }
 
+function openEditForm(index) {
+  const noteToEdit = activeNotes[index];
+  editNoteContent.value = noteToEdit.content;
+  editCategorySelect.value = noteToEdit.category;
+  editNoteContainer.style.display = 'block';
+  activeNoteIndexToEdit = index;
+}
+
+function closeEditForm() {
+  editNoteContainer.style.display = 'none';
+  activeNoteIndexToEdit = -1;
+}
+
 function handleEditNote(event) {
   const index = event.target.dataset.index;
-  const newContent = prompt('Edit the note:', activeNotes[index].content);
-  if (newContent !== null && newContent.trim() !== '') {
-    activeNotes[index].content = newContent.trim();
-    activeNotes[index].dates = newContent.match(dateRegex);
-  }
-  renderApp();
+  openEditForm(index);
 }
+
+function handleSaveEdit() {
+  if (activeNoteIndexToEdit !== -1) {
+    const newContent = editNoteContent.value.trim();
+    const newCategory = editCategorySelect.value;
+
+    if (newContent !== '') {
+      activeNotes[activeNoteIndexToEdit].content = newContent;
+      activeNotes[activeNoteIndexToEdit].dates = newContent.match(dateRegex);
+      activeNotes[activeNoteIndexToEdit].category = newCategory;
+      closeEditForm();
+      rerenderApp();
+    } else {
+      alert('Note content cannot be empty.');
+    }
+  }
+}
+
+function handleCancelEdit() {
+  closeEditForm();
+}
+
 
 function handleArchiveNote(event) {
   const index = event.target.dataset.index;
@@ -130,5 +166,7 @@ function handleDeleteNote(event) {
 }
 
 document.querySelector('#addButton').addEventListener('click', handleAddNote);
+saveEditButton.addEventListener('click', handleSaveEdit);
+cancelEditButton.addEventListener('click', handleCancelEdit);
 
 rerenderApp();
