@@ -1,11 +1,7 @@
-function createNoteObject(content, category) {
-  const timestamp = new Date().toLocaleString();
-  const archived = false;
-  return { timestamp, content, category, archived };
-}
+import { createNoteObject, initialNotesState } from './data.js';
 
-let activeNotes = [];
-let archivedNotes = [];
+let activeNotes = initialNotesState.activeNotes;
+let archivedNotes = initialNotesState.archivedNotes;
 
 const noteInput = document.querySelector('#noteInput');
 const categorySelect = document.querySelector('#categorySelect');
@@ -15,12 +11,18 @@ const archivedNotesList = document.querySelector('#archivedNotesList');
 function renderNotes(notes, targetElement) {
   targetElement.innerHTML = '';
 
+  if (notes.length === 0) {
+    targetElement.innerHTML = '<h3>No notes to display</h3>';
+    return;
+  }
+
   notes.forEach((note, index) => {
     const noteDiv = document.createElement('div');
     noteDiv.innerHTML = `
-      <p><strong>${note.timestamp}</strong></p>
       <p><em>${note.category}</em></p>
       <p>${note.content}</p>
+      <p>Dates: ${note.dates ? note.dates.join(', ') : 'N/A'}</p>
+      <p><strong>${note.timestamp}</strong></p>
       ${targetElement === activeNotesList
         ? `<button class="editButton" data-index="${index}">Edit</button>
            <button class="archiveButton" data-index="${index}">Archive</button>`
@@ -43,9 +45,38 @@ function renderNotes(notes, targetElement) {
   deleteButtons.forEach(button => button.addEventListener('click', handleDeleteNote));
 }
 
+function updateSummaryTable() {
+  const categoryCounts = {};
+
+  activeNotes.forEach(note => {
+    categoryCounts[note.category] = (categoryCounts[note.category] || 0) + 1;
+  });
+
+  archivedNotes.forEach(note => {
+    categoryCounts[note.category] = (categoryCounts[note.category] || 0) + 1;
+  });
+
+  const summaryTable = document.querySelector('#summaryTable');
+  summaryTable.innerHTML = `
+    <tr>
+      <th>Category</th>
+      <th>Active Notes</th>
+      <th>Archived Notes</th>
+    </tr>
+    ${Object.keys(categoryCounts).map(category => `
+      <tr>
+        <td>${category}</td>
+        <td>${activeNotes.filter(note => note.category === category).length}</td>
+        <td>${archivedNotes.filter(note => note.category === category).length}</td>
+      </tr>
+    `).join('')}
+  `;
+}
+
 function rerenderApp() {
   renderNotes(activeNotes, activeNotesList);
   renderNotes(archivedNotes, archivedNotesList);
+  updateSummaryTable();
 }
 
 function handleAddNote() {
@@ -66,8 +97,9 @@ function handleEditNote(event) {
   const newContent = prompt('Edit the note:', activeNotes[index].content);
   if (newContent !== null && newContent.trim() !== '') {
     activeNotes[index].content = newContent.trim();
-    rerenderApp();
+    activeNotes[index].dates = newContent.match(dateRegex);
   }
+  renderApp();
 }
 
 function handleArchiveNote(event) {

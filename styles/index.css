@@ -1,0 +1,93 @@
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  margin: 20px;
+  background-color: #333;
+  color: #fff;
+}
+
+h2 {
+  margin-top: 30px;
+  color: #66aaff;
+}
+
+div {
+  margin-bottom: 20px;
+}
+
+input[type="text"],
+select {
+  padding: 8px;
+  font-size: 16px;
+  background-color: #444;
+  border: none;
+  color: #fff;
+  border-radius: 8px;
+}
+
+button {
+  padding: 8px 12px;
+  font-size: 16px;
+  background-color: #66aaff;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #5599dd;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-top: 20px;
+}
+
+table th, table td {
+  padding: 10px;
+  border: 1px solid #555;
+}
+
+table th {
+  background-color: #444;
+}
+
+.editButton, .archiveButton, .unarchiveButton, .deleteButton {
+  margin-right: 5px;
+}
+
+#noteInput, #categorySelect {
+  width: 300px;
+}
+
+#activeNotesList, #archivedNotesList {
+  border: 1px solid #555;
+  padding: 10px;
+}
+
+#activeNotesList div, #archivedNotesList div {
+  margin-bottom: 10px;
+  background-color: #555;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+/* Custom scrollbar style */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #444;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #66aaff;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #5599dd;
+}

@@ -1,31 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Task1</title>
-    <link rel="stylesheet" href="styles/index.css" />
-  </head>
-  <body>
-    <div class="container">
-      <div class="input-wrapper">
-        <input
-          type="text"
-          id="noteInput"
-          placeholder="Enter your note here..."
-        />
-        <select id="categorySelect">
-          <option value="Task">Task</option>
-          <option value="Random Thought">Random Thought</option>
-          <option value="Idea">Idea</option>
-        </select>
-        <button id="addButton">Add Note</button>
-      </div>
 
-      <div id="activeNotesList"></div>
-      <div id="archivedNotesList"></div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Task1</title>
+  <link rel="stylesheet" href="styles/index.css" />
+</head>
+
+<body>
+  <div class="container">
+    <div class="input-wrapper">
+      <input type="text" id="noteInput" placeholder="Enter your note here..." />
+      <select id="categorySelect">
+        <option value="Task">Task</option>
+        <option value="Random Thought">Random Thought</option>
+        <option value="Idea">Idea</option>
+      </select>
+      <button id="addButton">Add Note</button>
     </div>
 
-    <script src="index.js"></script>
-  </body>
+    <h2>Notes:</h2>
+    <div id="activeNotesList"></div>
+    <h2>Archived Notes:</h2>
+    <div id="archivedNotesList"></div>
+  </div>
+
+  <div id="editNoteContainer" style="display: none;">
+    <input type="text" id="editNoteContent" placeholder="Edit your note content...">
+    <select id="editCategorySelect">
+      <option value="Task">Task</option>
+      <option value="Random Thought">Random Thought</option>
+      <option value="Idea">Idea</option>
+    </select>
+    <button id="saveEditButton">Save</button>
+    <button id="cancelEditButton">Cancel</button>
+  </div>
+
+  <div>
+    <h2>Summary Table</h2>
+    <table id="summaryTable">
+      <tr>
+        <th>Category</th>
+        <th>Active Notes Count</th>
+        <th>Archived Notes Count</th>
+      </tr>
+    </table>
+  </div>
+
+  <script type="module" src="index.js"></script>
+</body>
+
 </html>
