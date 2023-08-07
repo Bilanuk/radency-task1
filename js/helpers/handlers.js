@@ -62,9 +62,9 @@ function handleUnarchiveNote(event) {
 
 function handleDeleteNote(event) {
   const index = event.target.dataset.index;
-  if (event.target.parentElement.parentElement === activeNotesList) {
+  if (event.target.parentElement.parentElement.parentElement === activeNotesList) {
     activeNotes.splice(index, 1);
-  } else if (event.target.parentElement.parentElement === archivedNotesList) {
+  } else if (event.target.parentElement.parentElement.parentElement === archivedNotesList) {
     archivedNotes.splice(index, 1);
   } else {
     throw new Error('Unknown note type');

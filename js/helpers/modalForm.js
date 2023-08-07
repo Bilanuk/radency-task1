@@ -8,13 +8,14 @@ function openEditForm(index) {
   const editButtonRect = event.target.getBoundingClientRect();
   const containerRect = activeNotesList.getBoundingClientRect();
 
-  const topOffset = editButtonRect.bottom - containerRect.top + 150;
-  const leftOffset = editButtonRect.left;
+  const topOffset = editButtonRect.top - containerRect.top + 250;
+  const leftOffset = editButtonRect.left - containerRect.left - 200;
 
   editNoteContainer.style.position = 'absolute';
   editNoteContainer.style.top = `${topOffset}px`;
   editNoteContainer.style.left = `${leftOffset}px`;
   editNoteContainer.style.display = 'block';
+
 
   setActiveNoteIndexToEdit(index);
 }

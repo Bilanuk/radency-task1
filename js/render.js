@@ -14,16 +14,21 @@ function renderNotes(notes, targetElement) {
 
   notes.map((note, index) => {
     const noteDiv = document.createElement('div');
+    noteDiv.classList.add('noteItem');
     noteDiv.innerHTML = `
-      <p><em>${note.category}</em></p>
-      <p>${note.content}</p>
-      <p>Dates: ${note.dates ? note.dates.join(', ') : 'N/A'}</p>
-      <p><strong>${note.timestamp}</strong></p>
-      ${targetElement === document.querySelector('#activeNotesList')
-        ? `<button class="editButton" data-index="${index}">Edit</button>
-           <button class="archiveButton" data-index="${index}">Archive</button>`
-        : `<button class="unarchiveButton" data-index="${index}">Unarchive</button>`}
-      <button class="deleteButton" data-index="${index}">Delete</button>
+      <div class="noteInfo">
+        <p><em>Category: ${note.category}</em></p>
+        <p>${note.content}</p>
+        <p>Dates: ${note.dates ? note.dates.join(', ') : 'N/A'}</p>
+        <p><strong>${note.timestamp}</strong></p>
+      </div>
+      <div class="noteActions">
+        ${targetElement === document.querySelector('#activeNotesList')
+          ? `<button class="editButton" data-index="${index}">Edit</button>
+            <button class="archiveButton" data-index="${index}">Archive</button>`
+          : `<button class="unarchiveButton" data-index="${index}">Unarchive</button>`}
+        <button class="deleteButton" data-index="${index}">Delete</button>
+      </div>
     `;
     targetElement.appendChild(noteDiv);
 
