@@ -1,5 +1,4 @@
 import { handleEditNote, handleArchiveNote, handleUnarchiveNote, handleDeleteNote } from './helpers/handlers.js';
-
 import { activeNotes, archivedNotes } from './data.js';
 
 const activeNotesList = document.querySelector('#activeNotesList');
@@ -13,7 +12,7 @@ function renderNotes(notes, targetElement) {
 
   targetElement.innerHTML = '';
 
-  notes.forEach((note, index) => {
+  notes.map((note, index) => {
     const noteDiv = document.createElement('div');
     noteDiv.innerHTML = `
       <p><em>${note.category}</em></p>
@@ -33,27 +32,27 @@ function renderNotes(notes, targetElement) {
 }
 
 function addEventListenersAfterRender(targetElement) {
-  const editButtons = targetElement.querySelectorAll('.editButton');
-  editButtons.forEach(button => button.addEventListener('click', handleEditNote));
+  const editButtons = Array.from(targetElement.querySelectorAll('.editButton'));
+  editButtons.map(button => button.addEventListener('click', handleEditNote));
 
-  const archiveButtons = targetElement.querySelectorAll('.archiveButton');
-  archiveButtons.forEach(button => button.addEventListener('click', handleArchiveNote));
+  const archiveButtons = Array.from(targetElement.querySelectorAll('.archiveButton'));
+  archiveButtons.map(button => button.addEventListener('click', handleArchiveNote));
 
-  const unarchiveButtons = targetElement.querySelectorAll('.unarchiveButton');
-  unarchiveButtons.forEach(button => button.addEventListener('click', handleUnarchiveNote));
+  const unarchiveButtons = Array.from(targetElement.querySelectorAll('.unarchiveButton'));
+  unarchiveButtons.map(button => button.addEventListener('click', handleUnarchiveNote));
 
-  const deleteButtons = targetElement.querySelectorAll('.deleteButton');
-  deleteButtons.forEach(button => button.addEventListener('click', handleDeleteNote));
+  const deleteButtons = Array.from(targetElement.querySelectorAll('.deleteButton'));
+  deleteButtons.map(button => button.addEventListener('click', handleDeleteNote));
 }
 
 function updateSummaryTable() {
   const categoryCounts = {};
 
-  activeNotes.forEach(note => {
+  activeNotes.map(note => {
     categoryCounts[note.category] = (categoryCounts[note.category] || 0) + 1;
   });
 
-  archivedNotes.forEach(note => {
+  archivedNotes.map(note => {
     categoryCounts[note.category] = (categoryCounts[note.category] || 0) + 1;
   });
 
